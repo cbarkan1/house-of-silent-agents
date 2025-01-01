@@ -35,6 +35,7 @@ class Agent:
         )
         response = self.prompt_model(prompt)
         choice = self.find_choice(response)
+        self.choice_record.append(choice)
         self.move(choice, other_agent_position)
         return choice
 
