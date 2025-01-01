@@ -15,5 +15,5 @@ def run(circumference, init_positions, num_turns):
 
 
 if __name__ == "__main__":
-    run(circumference=9, init_positions=[5, 8], num_turns=5)
+    run(circumference=13, init_positions=[5, 8], num_turns=5)
     exit()

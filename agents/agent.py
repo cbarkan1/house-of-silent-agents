@@ -50,7 +50,7 @@ class Agent:
             other_agent_choice == "move closer to Bob"
             or other_agent_choice == "move farther from Bob"
         ):
-            prompt += f"Bob then chose to move {other_agent_choice[0:-4]} you. "
+            prompt += f"Bob then chose to {other_agent_choice[0:-4]} you. "
 
         prompt += f"You are now a distance of {distance}ft from Bob. "
 

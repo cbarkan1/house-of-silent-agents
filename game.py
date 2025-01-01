@@ -31,6 +31,7 @@ class Game:
         )
         initial_choices = (choice0, choice1)
         self.position_record.append((self.agent_one.position, self.agent_two.position))
+        self.choice_record.append(initial_choices)
         return initial_choices
 
     def play_round(self, turn_number: int):
