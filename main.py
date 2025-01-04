@@ -13,8 +13,9 @@ def run(circumference, init_positions, num_turns):
     game = Game(room, agent0, agent1)
     game.run_game(num_turns)
     game.generate_html(output_file="message_log.html")
+    game.plot_positions(save_filename='im.svg', show=False)
 
 
 if __name__ == "__main__":
-    run(circumference=19, init_positions=[5, 10], num_turns=0)
+    run(circumference=19, init_positions=[5, 10], num_turns=1)
     exit()

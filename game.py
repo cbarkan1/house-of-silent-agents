@@ -1,5 +1,6 @@
 from agents.agent import Agent
 from rooms.room import Room
+import matplotlib.pyplot as plt
 
 
 class Game:
@@ -41,13 +42,7 @@ class Game:
         )
         return (choice0, choice1)
 
-    def print_message_record(self):
-        for message in self.message_record:
-            role = message["role"].capitalize()
-            content = message["content"]
-            print(f"{role}: {content}\n")
-
-    def generate_html(self, output_file="message_log.html"):
+    def generate_html(self, output_file="message_log.html", include_plot=True):
         html_template = """
         <!DOCTYPE html>
         <html lang="en">
@@ -82,7 +77,10 @@ class Game:
             </style>
         </head>
         <body>
-            <h1 style="text-align: center">House of Silent Agents message log</h1>
+            <h1 style="text-align: center; font-family: Arial, sans-serif">House of Silent Agents message log</h1>
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="im.svg" alt="Simulation Diagram" style="max-width: 80%; height: auto;">
+            </div>
             <div class="container">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                     <h2 style="width: 45%; text-align: center; font-weight: bold;">Agent 0</h2>
@@ -93,41 +91,53 @@ class Game:
         </body>
         </html>
         """
+        #if include_plot:
+        #    self.plot_positions(save_filename='im1.svg', show=False)
+        
+        def add_message(combined_log, agent_num, message_dic):
+            """
+            agent_num = 0 or 1
+            """
+            combined_log.append(
+                f'<div class="agent-log agent-{agent_num}">'
+                f'<span class="agent-label">{message_dic["role"]}:</span> {message_dic["content"]}'
+                '</div>'
+            )
+            return combined_log 
 
         combined_log = []
         min_rounds = int(max(len(self.agent0.message_record), len(self.agent1.message_record))/2)
         print('min_rounds = ', min_rounds)
         for r in range(min_rounds):
-            # agent0
             user_index = 2*r
             assistant_index = 2*r + 1
+            combined_log = add_message(combined_log, 0, self.agent0.message_record[user_index])
+            combined_log = add_message(combined_log, 0, self.agent0.message_record[assistant_index])
+            combined_log = add_message(combined_log, 1, self.agent0.message_record[user_index])
+            combined_log = add_message(combined_log, 1, self.agent0.message_record[assistant_index])
 
-            combined_log.append(
-                f'<div class="agent-log agent-0">'
-                f'<span class="agent-label">agent_0 - user:</span> {self.agent0.message_record[user_index]["content"]}</div>'
-            )
-            combined_log.append(
-                f'<div class="agent-log agent-0">'
-                f'<span class="agent-label">agent_0 - assistant:</span> {self.agent0.message_record[assistant_index]["content"]}</div>'
-            )
-
-            # agent1
-            combined_log.append(
-                f'<div class="agent-log agent-1">'
-                f'<span class="agent-label">agent_1 - user:</span> {self.agent1.message_record[user_index]["content"]}</div>'
-            )
-            combined_log.append(
-                f'<div class="agent-log agent-1">'
-                f'<span class="agent-label">agent_1 - assistant:</span> {self.agent1.message_record[assistant_index]["content"]}</div>'
-            )
-
-        # Generate final HTML by inserting the combined log entries
         final_html = html_template.replace("{log_entries}", "\n".join(combined_log))
-
-        # Write to file
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(final_html)
         print(f"Message log saved to {output_file}")
+
+    def plot_positions(self, save_filename=None, show=True):
+        plt.plot(self.agent0.position_record)
+        plt.plot(self.agent1.position_record)
+        plt.ylim(0, self.room.circumference-1)
+        num_steps = max(len(self.agent0.position_record), len(self.agent1.position_record))
+        plt.xlim(0, num_steps-1)
+        plt.legend(['Agent 0', 'Agent 1'])
+        ax = plt.gca()
+        ax.spines[['right', 'top']].set_visible(False)
+        ax.set_yticks(range(self.room.circumference))
+        ax.set_xticks(range(num_steps))
+        plt.xlabel('Round')
+        plt.ylabel('Agent position')
+        if show:
+            plt.show()
+        if save_filename:
+            plt.savefig(save_filename)
 
     def run_game(self, num_turns):
         """
