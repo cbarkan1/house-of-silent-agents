@@ -12,8 +12,9 @@ def run(circumference, init_positions, num_turns):
     agent1 = Agent(room, init_positions[1])
     game = Game(room, agent0, agent1)
     game.run_game(num_turns)
+    game.generate_html(output_file="message_log.html")
 
 
 if __name__ == "__main__":
-    run(circumference=13, init_positions=[5, 8], num_turns=5)
+    run(circumference=19, init_positions=[5, 10], num_turns=0)
     exit()

@@ -27,7 +27,7 @@ class Agent:
         """
         distance = self.room.dist(self.position, other_agent_position)
         prompt = (
-            f"Hello! Let's play a game. You are walking around in a room, and your "
+            f"Hello! You are an AI agent walking around in a room, and your "
             f"{relationship} Bob is also in the room. You are a distance of {distance}ft away from Bob. Would you like to move closer to Bob, "
             "or farther from Bob? Please choose one of the following and provide a brief explanation of your choice:\n"
             "(A): Closer\n"
