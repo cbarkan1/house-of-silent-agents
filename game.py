@@ -1,6 +1,7 @@
 from agents.agent import Agent
 from rooms.room import Room
 import matplotlib.pyplot as plt
+import io
 
 
 class Game:
@@ -79,7 +80,7 @@ class Game:
         <body>
             <h1 style="text-align: center; font-family: Arial, sans-serif">House of Silent Agents message log</h1>
             <div style="text-align: center; margin: 20px 0;">
-                <img src="im.svg" alt="Simulation Diagram" style="max-width: 80%; height: auto;">
+                {svg_image}
             </div>
             <div class="container">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
@@ -91,8 +92,11 @@ class Game:
         </body>
         </html>
         """
-        #if include_plot:
-        #    self.plot_positions(save_filename='im1.svg', show=False)
+        if include_plot:
+            svg_data = self.plot_positions(show=False, return_svg_data=True)
+            html_template = html_template.replace("{svg_image}", svg_data)
+        else:
+            html_template = html_template.replace("{svg_image}", "")
         
         def add_message(combined_log, agent_num, message_dic):
             """
@@ -113,15 +117,16 @@ class Game:
             assistant_index = 2*r + 1
             combined_log = add_message(combined_log, 0, self.agent0.message_record[user_index])
             combined_log = add_message(combined_log, 0, self.agent0.message_record[assistant_index])
-            combined_log = add_message(combined_log, 1, self.agent0.message_record[user_index])
-            combined_log = add_message(combined_log, 1, self.agent0.message_record[assistant_index])
+            combined_log = add_message(combined_log, 1, self.agent1.message_record[user_index])
+            combined_log = add_message(combined_log, 1, self.agent1.message_record[assistant_index])
 
-        final_html = html_template.replace("{log_entries}", "\n".join(combined_log))
+        html_template = html_template.replace("{log_entries}", "\n".join(combined_log))
         with open(output_file, "w", encoding="utf-8") as f:
-            f.write(final_html)
+            f.write(html_template)
         print(f"Message log saved to {output_file}")
 
-    def plot_positions(self, save_filename=None, show=True):
+    def plot_positions(self, show=True, return_svg_data=False):
+        plt.figure()
         plt.plot(self.agent0.position_record)
         plt.plot(self.agent1.position_record)
         plt.ylim(0, self.room.circumference-1)
@@ -134,10 +139,15 @@ class Game:
         ax.set_xticks(range(num_steps))
         plt.xlabel('Round')
         plt.ylabel('Agent position')
+        return_data = None
+        if return_svg_data:        
+            buffer = io.StringIO()
+            plt.savefig(buffer, format='svg')
+            return_data = buffer.getvalue()
+            buffer.close()
         if show:
             plt.show()
-        if save_filename:
-            plt.savefig(save_filename)
+        return return_data
 
     def run_game(self, num_turns):
         """
