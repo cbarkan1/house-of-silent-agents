@@ -9,7 +9,7 @@ class Agent:
         Args:
           room: Room object
           init_position: initial position in room (integer between 0 and room.circumference-1)
-          model: chatbot model provided by ollama
+          llm: dictionary of form {"api":"<api_name>", "model":"model_name"}
         """
         self.room = room
         self.position = init_position
@@ -17,8 +17,8 @@ class Agent:
         self.message_record = []
         self.choice_record = []
         self.position_record = [init_position]
-        create_chat = import_module(f"agents.api_chat_methods.{llm['api']}_chat").create_chat
-        self.chat = create_chat(llm["model"])
+        create_generate = import_module(f"agents.generate_with_api_funcs.{llm['api']}_generate").create_generate
+        self.generate = create_generate(llm["model"])
 
     def initiate_game(self, other_agent_position, relationship="friend"):
         """
@@ -95,6 +95,6 @@ class Agent:
 
     def prompt_model(self, prompt):
         self.message_record.append({"role": "user", "content": prompt})
-        response = self.chat(self.message_record)
+        response = self.generate(self.message_record)
         self.message_record.append({"role": "assistant", "content": response})
         return response

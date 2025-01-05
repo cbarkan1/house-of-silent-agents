@@ -7,8 +7,8 @@ def run(circumference, init_positions, num_turns):
     """
     Run the game with the given parameters and defined agents.
     """
-    #llm = {"api":"ollama", "model":"llama3.2"}
-    llm = {"api":"openai", "model":"gpt-4o-mini"}
+    llm = {"api":"ollama", "model":"llama3.2"}
+    #llm = {"api":"openai", "model":"gpt-4o-mini"}
     room = OneDimensionalRoom(circumference=circumference)
     agent0 = Agent(room, init_positions[0], llm)
     agent1 = Agent(room, init_positions[1], llm)

@@ -9,8 +9,8 @@ class Game:
         """
         Args:
           room: Room class
-          agent0: chatbot model provided by ollama
-          agent1: chatbot model provided by ollama
+          agent0: Agent class
+          agent1: Agent class
         """
         self.room = room
         self.agent0 = agent0
@@ -159,5 +159,3 @@ class Game:
         for i in range(num_turns):
             choices = self.play_round(i)
             print(choices)
-
-        

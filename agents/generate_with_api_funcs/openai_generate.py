@@ -1,5 +1,5 @@
 """
-OpenAI API key must be stored in a .env file in the api_chat_methods directory
+OpenAI API key must be stored in a .env file in the generate_with_api_funcs directory
 .env file should contain:
 OPENAI_API_KEY = "<insert api key here>"
 """
@@ -12,9 +12,9 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
-def create_chat(model):
-    def chat(message_record):
+def create_generate(model):
+    def generate(message_record):
         response = client.chat.completions.create(
             model=model, messages=message_record)
         return response.choices[0].message.content
-    return chat
+    return generate
