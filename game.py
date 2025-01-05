@@ -43,14 +43,14 @@ class Game:
         )
         return (choice0, choice1)
 
-    def generate_html(self, output_file="message_log.html", include_plot=True):
+    def create_results_log(self, output_file, include_plot=True):
         html_template = """
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Multi-Agent Chat Log</title>
+            <title>Results Log</title>
             <style>
                 .container {
                     display: flex;
@@ -78,7 +78,7 @@ class Game:
             </style>
         </head>
         <body>
-            <h1 style="text-align: center; font-family: Arial, sans-serif">House of Silent Agents message log</h1>
+            <h1 style="text-align: center; font-family: Arial, sans-serif">House of Silent Agents Results Log</h1>
             <div style="text-align: center; margin: 20px 0;">
                 {svg_image}
             </div>
@@ -123,7 +123,7 @@ class Game:
         html_template = html_template.replace("{log_entries}", "\n".join(combined_log))
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(html_template)
-        print(f"Message log saved to {output_file}")
+        print(f"Results log saved to {output_file}")
 
     def plot_positions(self, show=True, return_svg_data=False):
         plt.figure()

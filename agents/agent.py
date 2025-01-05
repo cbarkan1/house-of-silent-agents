@@ -1,10 +1,9 @@
-from ollama import chat
 from agents.response_parser import ModelResponseParser
-
+from importlib import import_module
 
 class Agent:
     def __init__(
-        self, room, init_position, model="llama3.2", move_parser=ModelResponseParser()
+        self, room, init_position, llm, move_parser=ModelResponseParser()
     ):
         """
         Args:
@@ -14,11 +13,12 @@ class Agent:
         """
         self.room = room
         self.position = init_position
-        self.model = model
         self.move_parser = move_parser
         self.message_record = []
         self.choice_record = []
         self.position_record = [init_position]
+        create_chat = import_module(f"agents.api_chat_methods.{llm['api']}_chat").create_chat
+        self.chat = create_chat(llm["model"])
 
     def initiate_game(self, other_agent_position, relationship="friend"):
         """
@@ -95,8 +95,6 @@ class Agent:
 
     def prompt_model(self, prompt):
         self.message_record.append({"role": "user", "content": prompt})
-        response = chat(model=self.model, messages=self.message_record)["message"][
-            "content"
-        ]
+        response = self.chat(self.message_record)
         self.message_record.append({"role": "assistant", "content": response})
         return response
