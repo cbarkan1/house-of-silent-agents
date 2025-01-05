@@ -1,3 +1,9 @@
+"""
+OpenAI API key must be stored in a .env file in the api_chat_methods directory
+.env file should contain:
+OPENAI_API_KEY = "<insert api key here>"
+"""
+
 import os
 import openai
 from openai import OpenAI
