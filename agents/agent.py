@@ -60,7 +60,7 @@ class Agent:
         else:
             prompt = (
                 f"You chose {prev_choice}, to move {self.choice_dic[prev_choice]} from position $x={self.position_record[-2]}$ "
-                f"to position $x={self.position_record[-1]}$."
+                f"to position $x={self.position_record[-1]}$. "
             )
 
         prompt += f"Bob then chose to move from position $x={other_agent_position_record[-2]}$ to $x={other_agent_position_record[-1]}$. "

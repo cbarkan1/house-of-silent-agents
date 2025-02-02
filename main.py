@@ -12,16 +12,16 @@ def run(circumference, init_positions, num_turns):
     agent0 = Agent(room, init_positions[0], llm)
 
     agent1_goal = (
-        "Using your movements, try to get Bob to move to position $x=19$, you "
+        "Using your movements, try to get Bob to move to position $x=14$, you "
         "have a gift you want to give him at that position! "
     )
 
     agent1 = Agent(room, init_positions[1], llm, goal_prompt=agent1_goal)
     game = Game(room, agent0, agent1)
     game.run_game(num_turns)
-    game.create_results_log("logs/results_log3.html")
+    game.create_results_log("logs/results_log2.html")
 
 
 if __name__ == "__main__":
-    run(circumference=23, init_positions=[5, 12], num_turns=1)
+    run(circumference=23, init_positions=[7, 12], num_turns=10)
     exit()
