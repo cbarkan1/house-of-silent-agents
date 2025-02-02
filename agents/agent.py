@@ -1,6 +1,7 @@
 from importlib import import_module
 import re
 
+
 class Agent:
     def __init__(self, room, init_position, llm, goal_prompt = ""):
         """

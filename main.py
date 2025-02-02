@@ -1,6 +1,6 @@
 from agents.agent import Agent
 from game import Game, Room
-
+from log_and_plot import create_results_log
 
 def run(circumference, init_positions, num_turns):
     """
@@ -19,9 +19,9 @@ def run(circumference, init_positions, num_turns):
     agent1 = Agent(room, init_positions[1], llm, goal_prompt=agent1_goal)
     game = Game(room, agent0, agent1)
     game.run_game(num_turns)
-    game.create_results_log("logs/results_log2.html")
+    create_results_log(game, "logs/results_log2.html")
 
 
 if __name__ == "__main__":
-    run(circumference=23, init_positions=[7, 12], num_turns=10)
+    run(circumference=23, init_positions=[7, 12], num_turns=1)
     exit()
