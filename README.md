@@ -1,8 +1,10 @@
 # Project Overview
 
 Welcome to the House of Silent Agents, an experiment where two LLM agents walk silently in a room, interacting only by observing one another's movements.
-The experiment shows that LLMs can strategize about social influence, choosing a strategy to influence the movements of the other agent in order
+The experiment demonstrates that LLMs can strategize about social influence, choosing a strategy to influence the movements of the other agent in order
 to achieve a goal.
+
+[A more detailed report on the project is available here.](https://docs.google.com/document/d/13vxh-wfnLAqKVTQgwLt7E273XeQWsb6Uo6DuGHUc4hs/edit?usp=sharing)
 
 ## Environment setup and installation
 
