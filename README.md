@@ -4,7 +4,9 @@ Welcome to the House of Silent Agents, an experiment where two LLM agents walk s
 The experiment demonstrates that LLMs can strategize about social influence, choosing a strategy to influence the movements of the other agent in order
 to achieve a goal.
 
-[A more detailed report on the project is available here.](https://docs.google.com/document/d/13vxh-wfnLAqKVTQgwLt7E273XeQWsb6Uo6DuGHUc4hs/edit?usp=sharing)
+A more detailed report on the project is available [here](https://docs.google.com/document/d/13vxh-wfnLAqKVTQgwLt7E273XeQWsb6Uo6DuGHUc4hs/edit?usp=sharing).
+
+A transcript of one run of the simulation is available [here](https://cbarkan1.github.io/HOSA_log.html).
 
 ## Environment setup and installation
 
