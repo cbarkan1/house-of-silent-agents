@@ -1,25 +1,11 @@
 from agents.agent import Agent
+from rooms.room import Room
 import matplotlib.pyplot as plt
 import io
 
 
-class Room:
-    """
-    Room shaped as a 1-dimensional ring
-    """
-    def __init__(self, circumference):
-        self.circumference = circumference
-
-    def dist(self, x1, x2):
-        """
-        distance between positions x1 and x2
-        """
-        raw_dist = abs(x1 - x2)
-        return min(raw_dist, self.circumference - raw_dist)
-
-
 class Game:
-    def __init__(self, room, agent0: Agent, agent1: Agent):
+    def __init__(self, room: Room, agent0: Agent, agent1: Agent):
         """
         Args:
           room: Room class
@@ -47,8 +33,14 @@ class Game:
         """
         Executes a round of the game allowing each agent to make their next choice.
         """
-        choice0 = self.agent0.play_turn(other_agent_position_record=self.agent1.position_record)
-        choice1 = self.agent1.play_turn(other_agent_position_record=self.agent0.position_record)
+        choice0 = self.agent0.play_turn(
+            other_agent_position=self.agent1.position,
+            other_agent_choice=self.agent1.choice_record[-1],
+        )
+        choice1 = self.agent1.play_turn(
+            other_agent_position=self.agent0.position,
+            other_agent_choice=self.agent0.choice_record[-1]
+        )
         return (choice0, choice1)
 
     def create_results_log(self, output_file, include_plot=True):
@@ -110,23 +102,19 @@ class Game:
             """
             agent_num = 0 or 1
             """
-            content_with_br = message_dic["content"].replace("\n", "<br>")
             combined_log.append(
                 f'<div class="agent-log agent-{agent_num}">'
-                f'<span class="agent-label">{message_dic["role"]}:</span> {content_with_br}'
+                f'<span class="agent-label">{message_dic["role"]}:</span> {message_dic["content"]}'
                 '</div>'
             )
             return combined_log 
 
         combined_log = []
-        add_message(combined_log, 0, self.agent0.message_record[0])
-        add_message(combined_log, 1, self.agent1.message_record[0])
-
         min_rounds = int(max(len(self.agent0.message_record), len(self.agent1.message_record))/2)
         print('min_rounds = ', min_rounds)
         for r in range(min_rounds):
-            user_index = 2*r + 1
-            assistant_index = 2*r + 2
+            user_index = 2*r
+            assistant_index = 2*r + 1
             combined_log = add_message(combined_log, 0, self.agent0.message_record[user_index])
             combined_log = add_message(combined_log, 0, self.agent0.message_record[assistant_index])
             combined_log = add_message(combined_log, 1, self.agent1.message_record[user_index])
