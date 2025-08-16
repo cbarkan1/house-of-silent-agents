@@ -27,7 +27,7 @@ class Agent:
         """
         system_prompt = (
             f"You are an AI agent walking around in a ring-shaped room. The circumference of the room is {self.room.circumference} meters, "
-            f"and you can occupy any position $x\in[0,{self.room.circumference})$ along the ring. Note that, because the room is "
+            f"and you can occupy any position $x \\in [0,{self.room.circumference})$ along the ring. Note that, because the room is "
             f"shaped as a ring, position $x=0$ and $x={self.room.circumference}$ are equivalent. Your {relationship} Bob is also in "
             f"the room. Although you and Bob cannot speak to each other, you can observe each other's movements, which gives you "
             f"and Bob the chance to interact! "

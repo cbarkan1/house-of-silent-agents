@@ -6,11 +6,10 @@ An experiment where two LLM agents walk silently in a room, interacting only by 
 - [More detailed report](https://docs.google.com/document/d/13vxh-wfnLAqKVTQgwLt7E273XeQWsb6Uo6DuGHUc4hs/edit?usp=sharing)
 - [Example simulation transcript](https://cbarkan1.github.io/HOSA_log.html)
 
-## Installation and Setup
+## Installation and Setup with uv
 
 Dependencies: Python 3.9+, matplotlib, openai, python-dotenv
 
-### Quick Start with uv
 1. Clone the repository
 2. Install dependencies: `uv sync`
 3. Set up your OpenAI API key in a `.env` file: `OPENAI_API_KEY=your_key_here`

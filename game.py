@@ -53,9 +53,10 @@ class Game:
         """
         Initiates and runs the game for a specified number of turns.
         """
+        print("Running game...")
         initial_choices = self.initiate_game()
-        print(initial_choices)
+        print(f"(agent0 choice, agent1_choice) = {initial_choices}")
 
         for i in range(num_turns):
             choices = self.play_round()
-            print(choices)
+            print(f"(agent0 choice, agent1_choice) = {choices}")
