@@ -18,7 +18,7 @@ class Agent:
         create_generate = import_module(f"agents.generate_with_api_funcs.{llm['api']}_generate").create_generate
         self.generate = create_generate(llm["model"])
         self.goal_prompt = goal_prompt
-        self.choice_dic = {"(A)": "left", "(B)": "left", "(C)": "remain"}
+        self.choice_dic = {"(A)": "left", "(B)": "right", "(C)": "remain"}
 
     def initiate_game(self, other_agent_position, relationship="friend"):
         """
